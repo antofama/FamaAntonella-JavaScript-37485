@@ -112,6 +112,7 @@ eliminarDelCarrito();
  */
 
 //me sale un error undefined, es porque tengo que declarar una variable Let acumulador = 0;?
+//la funcion de calcular se puede llamar de agregar al carrito o la declaro directamente ahi ?
  
 function calcularCompra() {
     const total = carrito.reduce((acumulador,producto) => acumulador + producto.precio,0)
