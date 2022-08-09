@@ -15,31 +15,54 @@
     </head>
     <body>
         <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-4 px-lg-5">
                 <a class="navbar-brand" href="index.html">Coffe Time</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="./pages/home.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Productos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#seccion-cards">Productos</a></li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Carrito</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">Carrito</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
+                    <div class="d-flex">
+                        <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             <i class="bi-cart-fill me-1"></i>
                             Cart
-                            <span id= "cart-total" class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                            <span id= "cart-total" class="badge bg-dark  ms-1 rounded-pill">0</span>
                         </button>
-                    </form>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Carrito</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-dark table-striped">
+                                        <thead>
+                                            <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">IMG</th>
+                                            <th scope="col">Precio</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tabla-carrito">
+                                        </tbody>   
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Comprar</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </nav>

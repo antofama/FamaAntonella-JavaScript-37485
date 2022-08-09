@@ -1,4 +1,8 @@
-const carrito = [];
+const carrito = JSON.parse(localStorage.getItem('carrito'))||[]; //??
+const total = carrito.reduce((total,producto) => total + producto.precio,0);
+
+
+
 const productos =[
     {
         id: 1,
@@ -58,8 +62,23 @@ const productos =[
     }
 ];
 
-//Generamos las Cards.
+//Boton carrito
+function botonCarrito() {
+    document.getElementById("tabla-carrito").innerHTML = ""
+    carrito.forEach((producto) => {
+        document.getElementById("tabla-carrito").innerHTML += `<tr>
+        <th scope="row">${producto.id}</th>
+        <td>${producto.producto}</td>
+        <td><img src="${producto.img}" style="height: 100px"></td>
+        <td>${producto.precio}</td>
+        <td><button type="button" class="btn btn-close btn-close-white borrar-producto" onclick="eliminarDelCarrito(${producto.id})" info-borrar="${producto.id}"></button></td>
+        </tr>`
+    })
+}
+botonCarrito();
 
+
+//generacion de cards
 productos.forEach((producto) =>{
     const idButton = `add-carts${producto.id}`
     document.getElementById("seccion-cards").innerHTML += `<div class="col mb-5">
@@ -74,51 +93,53 @@ productos.forEach((producto) =>{
             </div>
         </div>
         <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" id="${idButton}">Agregar al carrito</a></div>
+            <div class="text-center">
+            <a class="btn btn-outline-dark mt-auto" id="${idButton}">Agregar al carrito</a></div>
         </div>
     </div>
 </div>`
 })
 
-productos.forEach((producto) => {
-    const idButton =`add-carts${producto.id}`
-    document.getElementById(idButton) .onclick = ()=>{
-    carrito.push(producto);
-    document.getElementById("cart-total").innerHTML = carrito.length;   
-    console.log(carrito);
-}
-});
+// Agregamos productos al carrito
 
-// entiendo qu esta funcion ya no se necesita porque la utilice arriba
-/* 
-function totalCarrito(carrito) {
-    for (let i=0; i < carrito.length; i++){
-        console.log(carrito[i]);
-    }
-}
-totalCarrito(carrito); */
+function AgregarAlCarrito() {
+    productos.forEach((producto) => {
+        const idButton =`add-carts${producto.id}`
+        document.getElementById(idButton) .onclick = ()=>{
+        carrito.push(producto);
+        const total = carrito.reduce((total,producto) => total + producto.precio,0);
+        calcularCosto(total)   
+        console.log(carrito);
+        botonCarrito()
+        
+        }
+    })
+};
 
-/* function eliminarDelCarrito() {
-    const index = carrito.findIndex((productos) => productos.producto === nombreDelProducto)
+AgregarAlCarrito();
+
+
+
+function eliminarDelCarrito(productoId) {
+    const index = carrito.findIndex((producto) => producto.id === productoId);
     if(index != -1){
         carrito.splice(index,1)
         console.log(carrito);
-    }else{
-        alert("Ese producto no esta el carrito");
-
     }
+    const total = carrito.reduce((total,producto) => total + producto.precio,0);
+    calcularCosto(total);
+    botonCarrito()
+    
 }
 eliminarDelCarrito();
- */
-
-//me sale un error undefined, es porque tengo que declarar una variable Let acumulador = 0;?
-//la funcion de calcular se puede llamar de agregar al carrito o la declaro directamente ahi ?
  
-function calcularCompra() {
-    const total = carrito.reduce((acumulador,producto) => acumulador + producto.precio,0)
-    console.log(total);
+function calcularCosto(costo) {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    document.getElementById("cart-total").innerHTML = carrito.length + "-$"+ costo;
+    
 }
-calcularCompra(); 
+
+console.log(...carrito); // asi se utilizaria un spread de arrays ??
 
 //La forma de pago no se si es necesario dejarlo o se me complica mas el tema de la logica ?
 
