@@ -1,12 +1,12 @@
-const carrito = JSON.parse(localStorage.getItem('carrito'))||[]; //??
-const total = carrito.reduce((total,producto) => total + producto.precio,0);
+const carrito = JSON.parse(localStorage.getItem('carrito')) ?? []; 
+
 
 
 
 const productos =[
     {
         id: 1,
-        titulo:"Cafe Colombia",
+        producto:"Cafe Colombia",
         img: "../img/Colombia.jpg", 
         precio: 2400,
         stock: 15,
@@ -70,7 +70,7 @@ function botonCarrito() {
         <th scope="row">${producto.id}</th>
         <td>${producto.producto}</td>
         <td><img src="${producto.img}" style="height: 100px"></td>
-        <td>${producto.precio}</td>
+        <td> $${producto.precio}</td>
         <td><button type="button" class="btn btn-close btn-close-white borrar-producto" onclick="eliminarDelCarrito(${producto.id})" info-borrar="${producto.id}"></button></td>
         </tr>`
     })
@@ -126,20 +126,19 @@ function eliminarDelCarrito(productoId) {
         carrito.splice(index,1)
         console.log(carrito);
     }
-    const total = carrito.reduce((total,producto) => total + producto.precio,0);
-    calcularCosto(total);
     botonCarrito()
     
 }
-eliminarDelCarrito();
  
 function calcularCosto(costo) {
+    const total = carrito.reduce((total,producto) => total + producto.precio,0);
     localStorage.setItem("carrito", JSON.stringify(carrito));
     document.getElementById("cart-total").innerHTML = carrito.length + "-$"+ costo;
-    
+        
 }
+calcularCosto(costo);
 
-console.log(...carrito); // asi se utilizaria un spread de arrays ??
+
 
 //La forma de pago no se si es necesario dejarlo o se me complica mas el tema de la logica ?
 
