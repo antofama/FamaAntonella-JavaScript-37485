@@ -1,8 +1,5 @@
 const carrito = JSON.parse(localStorage.getItem('carrito')) ?? []; 
 
-
-
-
 const productos =[
     {
         id: 1,
@@ -111,7 +108,14 @@ function AgregarAlCarrito() {
         calcularCosto(total)   
         console.log(carrito);
         botonCarrito()
-        
+        Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Su producto se agrego correctamente',
+            showConfirmButton: false,
+            timer: 1500
+        })
+
         }
     })
 };
@@ -126,10 +130,45 @@ function eliminarDelCarrito(productoId) {
         carrito.splice(index,1)
         console.log(carrito);
     }
+    
     botonCarrito()
     
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+        swalWithBootstrapButtons.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+        )
+        } else if (
+          /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+        ) {
+        swalWithBootstrapButtons.fire(
+            'Cancelled',
+            'Your imaginary file is safe :)',
+            'error'
+        )
+        }
+    })
 }
- 
+eliminarDelCarrito(productoId);
+
 function calcularCosto(costo) {
     const total = carrito.reduce((total,producto) => total + producto.precio,0);
     localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -139,27 +178,7 @@ function calcularCosto(costo) {
 calcularCosto(costo);
 
 
-
-//La forma de pago no se si es necesario dejarlo o se me complica mas el tema de la logica ?
-
-/* function formaDepago(resultado, pago) {
-    switch (pago) {
-        case 1:
-            return alert("En: " + pago + "debe abonar 1 couta de:" + resultado);
-            break;
-        case 3:
-            return alert("En: " + pago + "debe abonar 3 couta de:" + resultado/3);
-            break;
-        case 6:
-            return alert("En: " + pago + "debe abonar 6 couta de:" + resultado/6);
-            break;
-        case 12:
-            return alert("En: " + pago + "debe abonar 12 couta de:" + resultado/12);
-            break;
-        default:
-            alert("No ingreso la cantidad de coutas validas");
-            break;
-    }
-    
-}
-formaDepago(resultado, pago); */
+/*realiza algunos cambios y agregue las librerias, lo unico que observo es que agrego o elimino del carrito,
+vuelvo a cargar la pagina y quedan los productos anteriores agregados y cuando elimino no va bajando la cantidad
+ni de precio, ni de cantidad. No puedo ver el error o ver que es lo que me falta.
+*/
