@@ -138,9 +138,3 @@ function calcularCosto() {
         
 }
 calcularCosto();
-
-
-/*realiza algunos cambios y agregue las librerias, lo unico que observo es que agrego o elimino del carrito,
-vuelvo a cargar la pagina y quedan los productos anteriores agregados y cuando elimino no va bajando la cantidad
-ni de precio, ni de cantidad. No puedo ver el error o ver que es lo que me falta.
-*/
