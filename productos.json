@@ -1,0 +1,10 @@
+[
+    {"id": 1, "producto": "Cafe Colombia","img":"../img/Colombia.jpg", "precio": 2400,"stock": 15},
+    {"id": 2, "producto": "Cafe El Salvador","img": "../img/El Salvador.jpg","precio": 1900,"stock": 10},
+    {"id": 3,"producto": "Cafe Etiopia","img": "../img/Etiopia.jpg","precio": 2200,"stock": 8},
+    {"id": 4,"producto": "Cafe Guatemala","img": "../img/Guatemala.jpg","precio": 1900,"stock": 11},
+    {"id": 5,"producto": "Cafe Honduras","img": "../img/Honduras.jpg","precio": 1750,"stock": 14},
+    {"id": 6,"producto": "Cafe Kenia","img": "../img/Kenia.jpg","precio": 2000,"stock": 9},
+    {"id": 7,"producto": "Cafe Nicaragua","img": "../img/Nicaragua.jpg","precio": 1600,"stock": 7},
+    {"id": 8,"producto": "Cafe Peru","img": "../img/Peru.jpg","precio": 1500,"stock": 6}
+]

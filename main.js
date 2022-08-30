@@ -1,63 +1,25 @@
 const carrito = JSON.parse(localStorage.getItem('carrito')) ?? []; 
 
-const productos =[
-    {
-        id: 1,
-        producto:"Cafe Colombia",
-        img: "../img/Colombia.jpg", 
-        precio: 2400,
-        stock: 15,
-    },
-    {
-        id: 2,
-        producto: "Cafe El Salvador",
-        img: "../img/El Salvador.jpg",
-        precio: 1900,
-        stock: 10,
-    },
-    {
-        id: 3,
-        producto: "Cafe Etiopia",
-        img: "../img/Etiopia.jpg",
-        precio: 2200,
-        stock: 8,
-    },
-    {
-        id: 4,
-        producto: "Cafe Guatemala",
-        img: "../img/Guatemala.jpg",
-        precio: 1900,
-        stock: 11,
-    },
-    {
-        id: 5,
-        producto: "Cafe Honduras",
-        img: "../img/Honduras.jpg",
-        precio: 1750,
-        stock: 14,
-    },
-    {
-        id: 6,
-        producto: "Cafe Kenia",
-        img: "../img/Kenia.jpg",
-        precio: 2000,
-        stock: 9,
-    },
-    {
-        id: 7,
-        producto: "Cafe Nicaragua",
-        img: "../img/Nicaragua.jpg",
-        precio: 1600,
-        stock: 7,
-    },
-    {
-        id: 8,
-        producto: "Cafe Peru",
-        img: "../img/Peru.jpg",
-        precio: 1500,
-        stock: 6,
-    }
-];
+const productos =[];
+
+//llamar al json para cargar las cards
+const productosEnJson = () => {
+    fetch ('./productos.json')
+    .then((response) => response.json ())
+    .then (data => {
+        productos (data),
+        AgregarAlCarrito(data),
+        productos.push(...data)
+
+    })
+}
+
+// otrA cosa que observo es que ahora que reaalize el archivo json no se ven en la pag. las cards
+/*realiza algunos cambios y agregue las librerias, lo unico que observo es que agrego o elimino del carrito,
+vuelvo a cargar la pagina y quedan los productos anteriores agregados y cuando elimino no va bajando la cantidad
+ni de precio, ni de cantidad. No puedo ver el error o ver que es lo que me falta.
+*/
+
 
 //Boton carrito
 function botonCarrito() {
@@ -109,9 +71,9 @@ function AgregarAlCarrito() {
         console.log(carrito);
         botonCarrito()
         Swal.fire({
-            position: 'top-end',
+            position:'top-end',
             icon: 'success',
-            title: 'Su producto se agrego correctamente',
+            title: 'Su producto ha sido agregado',
             showConfirmButton: false,
             timer: 1500
         })
@@ -141,18 +103,18 @@ function eliminarDelCarrito(productoId) {
         buttonsStyling: false
     })
     swalWithBootstrapButtons.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Estas seguro?',
+        text: "Su producto se eliminara!",
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
+        confirmButtonText: 'Si, eliminar!',
+        cancelButtonText: 'No, no eliminar!',
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
         swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your file has been deleted.',
+            'Eliminado!',
+            'Su producto ha sido eliminado.',
             'success'
         )
         } else if (
@@ -160,8 +122,8 @@ function eliminarDelCarrito(productoId) {
         result.dismiss === Swal.DismissReason.cancel
         ) {
         swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
+            'Cancelado',
+            'tu producto no ha sido eliminado :)',
             'error'
         )
         }
@@ -169,16 +131,10 @@ function eliminarDelCarrito(productoId) {
 }
 eliminarDelCarrito(productoId);
 
-function calcularCosto(costo) {
+function calcularCosto() {
     const total = carrito.reduce((total,producto) => total + producto.precio,0);
     localStorage.setItem("carrito", JSON.stringify(carrito));
-    document.getElementById("cart-total").innerHTML = carrito.length + "-$"+ costo;
+    document.getElementById("cart-total").innerHTML = carrito.length + "-$"+ total;
         
 }
-calcularCosto(costo);
-
-
-/*realiza algunos cambios y agregue las librerias, lo unico que observo es que agrego o elimino del carrito,
-vuelvo a cargar la pagina y quedan los productos anteriores agregados y cuando elimino no va bajando la cantidad
-ni de precio, ni de cantidad. No puedo ver el error o ver que es lo que me falta.
-*/
+calcularCosto();
